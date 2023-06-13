@@ -4,7 +4,7 @@
     <table style="width:100%;">
     <tr>
         <th scope="col"> Explore this recipes</th>
-        <th v-if="$root.store.username" scope="col">Last watched recipes</th>
+        <th v-if="$root.store.username" scope="col">Last Viewed  recipes</th>
     </tr>
     <tr style="width:100%">
       <td style="width:50%">
