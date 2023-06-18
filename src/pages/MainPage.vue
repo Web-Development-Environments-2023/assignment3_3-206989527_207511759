@@ -1,7 +1,15 @@
 <template>
   <div class="container">
     <h1 class="title">Main Page</h1>
-    <RecipePreviewList title="Randome Recipes" class="RandomRecipes center" />
+    <table style="width:100%;">
+    <tr>
+        <th scope="col"> Explore this recipes</th>
+        <th v-if="$root.store.username" scope="col">Last Viewed  recipes</th>
+    </tr>
+    <tr style="width:100%">
+      <td style="width:50%">
+         <RecipePreviewList title="Randome Recipes" class="RandomRecipes center" />
+      </td>
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
     {{ !$root.store.username }}
     <RecipePreviewList
@@ -18,6 +26,7 @@
     >
       Centeredasdasdad
     </div>-->
+    </table>
   </div>
 </template>
 
