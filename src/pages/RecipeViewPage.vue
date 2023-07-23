@@ -1,16 +1,26 @@
 <template>
   <div class="container">
     <div v-if="recipe">
+
       <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.title }}</h1>
+        <h1 style="color: #556B2F;">{{ recipe.title }}</h1>
         <img :src="recipe.image" class="center" />
       </div>
       <div class="recipe-body">
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
-              <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
+              <div style="color: #556B2F;">Ready in {{ recipe.readyInMinutes }} minutes</div>
+              <div style="color: #556B2F;">Likes: {{ recipe.popularity }} likes</div>
+              <div style="color: #556B2F;">Vegan: {{ recipe.vegan }}</div>
+              <div style="color: #556B2F;">Vegetarian: {{ recipe.vegetarian }}</div>
+              <div style="color: #556B2F;">Gluten Free: {{ recipe.glutenFree }}</div>
+
+              <div style="color: #556B2F;">Servings: {{ recipe.servings }}</div>
+
+
+              
+
             </div>
             Ingredients:
             <ul>
@@ -45,21 +55,28 @@
 export default {
   data() {
     return {
-      recipe: null
+      recipe: null,
+      title : null
     };
   },
+  
   async created() {
     try {
       let response;
       // response = this.$route.params.response;
 
       try {
+        this.title = this.$route.params.title;
+        console.log(this.title);
+        const recipe_id = this.$route.params.recipeId.id;
         response = await this.axios.get(
           // "https://test-for-3-2.herokuapp.com/recipes/info",
-          this.$root.store.server_domain + "/recipes/info",
-          {
-            params: { id: this.$route.params.recipeId }
-          }
+          this.$root.store.server_domain + `/recipes/fullinformation/${recipe_id}`,
+          {withCredentials: true}
+
+          // {
+          //   params: { recipeId: this.$route.params.recipeId }
+          // }
         );
 
         // console.log("response.status", response.status);
@@ -69,17 +86,20 @@ export default {
         this.$router.replace("/NotFound");
         return;
       }
-
+      console.log(response.data)
       let {
         analyzedInstructions,
         instructions,
         extendedIngredients,
-        aggregateLikes,
+        popularity,
         readyInMinutes,
         image,
-        title
-      } = response.data.recipe;
-
+        title,
+        vegan,
+        vegetarian,
+        glutenFree,
+        servings
+      } = response.data;
       let _instructions = analyzedInstructions
         .map((fstep) => {
           fstep.steps[0].step = fstep.name + fstep.steps[0].step;
@@ -92,10 +112,14 @@ export default {
         _instructions,
         analyzedInstructions,
         extendedIngredients,
-        aggregateLikes,
+        popularity,
         readyInMinutes,
         image,
-        title
+        title,
+        vegan,
+        vegetarian,
+        glutenFree,
+        servings
       };
 
       this.recipe = _recipe;
@@ -107,6 +131,9 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  color: #556B2F;
+}
 .wrapper {
   display: flex;
 }

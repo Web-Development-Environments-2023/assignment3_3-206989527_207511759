@@ -39,13 +39,13 @@
       <b-button
         type="submit"
         variant="primary"
-        style="width:100px;display:block;"
+        style="width:200px;text-align:center;;display:block;background-color: #556B2F;border-color: #556B2F;"
         class="mx-auto w-100"
         >Login</b-button
       >
       <div class="mt-2">
         Do not have an account yet?
-        <router-link to="register"> Register in here</router-link>
+        <router-link to="register"> Register here</router-link>
       </div>
     </b-form>
     <b-alert
@@ -57,9 +57,6 @@
     >
       Login failed: {{ form.submitError }}
     </b-alert>
-    <!-- <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card> -->
   </div>
 </template>
 
@@ -95,19 +92,13 @@ export default {
       try {
         
         const response = await this.axios.post(
-          // "https://test-for-3-2.herokuapp.com/user/Login",
-          this.$root.store.server_domain +"/Login",
-          // "http://132.72.65.211:80/Login",
-          // "http://132.73.84.100:80/Login",
-
+          this.$root.store.server_domain + "/Login",
           {
             username: this.form.username,
             password: this.form.password
-          }
+          },
+          {withCredentials: true}
         );
-        // console.log(response);
-        // this.$root.loggedIn = true;
-        console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
         this.$router.push("/");
       } catch (err) {
@@ -116,14 +107,11 @@ export default {
       }
     },
     onLogin() {
-      // console.log("login method called");
       this.form.submitError = undefined;
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
-      // console.log("login method go");
-
       this.Login();
     }
   }
@@ -132,5 +120,38 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 400px;
+  margin: 0 auto;
+  padding: 40px;
+  color: #556B2F;
 }
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.invalid-feedback {
+  color: red;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.mt-3 {
+  margin-top: 15px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.alert {
+  margin-top: 20px;
+}
+
 </style>

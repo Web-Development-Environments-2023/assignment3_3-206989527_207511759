@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Four Oh Four you didn't</h1>
-    <router-link to="/" exact>ET Go Home</router-link>
+    <h1 style="color: #556B2F;">oops please go back </h1>
+    <router-link to="/" exact> Go To Home</router-link>
   </div>
 </template>
