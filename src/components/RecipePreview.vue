@@ -1,5 +1,4 @@
 <template>
-  <!---->
     <router-link  :to="recipeLink" class="recipe-preview">
     
       <div class="recipe-body">
@@ -34,7 +33,6 @@
   export default {
     computed: {
       recipeLink() {
-        // Determine the route name dynamically based on the title
         if (this.title === 'Private Recipes') {
           return {
             name: 'PrivatePreview',
@@ -93,13 +91,11 @@
     
     display: inline-block;
     width: 100%;
-    /*height: 100%;*/
     position: relative;
   padding: 0;
   }
   .recipe-preview > .recipe-body {
     width: 100%;
-    /*height: 200px;*/
     position: relative;
     
   }

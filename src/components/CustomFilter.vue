@@ -14,7 +14,7 @@
     
               <option value="Default" selected>Default</option>
               <option value="Prepare Time">Prepare Time</option>
-              <option value="Stars"> Stars</option>
+              <option value="Stars"> Likes</option>
               
             </select>
     

@@ -256,13 +256,11 @@ export default {
 
       },
       async handleSubmit() {
-        // Exit when the form isn't valid
         if (!this.checkFormValidity()) {
           return
         }
         //submittion
         await this.submit()
-        // Hide the modal manually
         console.log(this.$bvModal)        
                 
       },
@@ -274,20 +272,8 @@ export default {
       },
       onFileSelected(event){
         this.selectedfile = event.target.files[0].name
-        console.log(this.selectedfile)
       },
       async submit(){
-        console.log(JSON.stringify(this.ingrediants))
-      //   const fd = new FormData();
-      //   fd.append('image',this.selectedfile)
-      //   fd.append('title',this.title)
-      //   fd.append('preparationTime',this.minutes)
-      //   fd.append('vegetarian',this.vegetarian)
-      //   fd.append('gluten',this.gluten)
-      //   fd.append('ingrediants',JSON.stringify(this.ingrediants))
-      //   fd.append('instructions',JSON.stringify(this.instructions))
-      //   fd.append('vegan',this.vegan)
-      //  console.log(fd)
         try {
         const response = await this.axios.post(
           this.$root.store.server_domain + "/users/privates",
@@ -301,7 +287,6 @@ export default {
             instructions : JSON.stringify(this.instructions),
             vegan : this.vegan
           },
-          // { headers: { "Content-Type": "multipart/form-data"}},
           {withCredentials: true}
 
           

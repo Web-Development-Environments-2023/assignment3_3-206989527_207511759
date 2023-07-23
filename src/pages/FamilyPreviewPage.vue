@@ -13,11 +13,6 @@
                 <div style="color: #556B2F;">Owner {{ recipe.recipe_owner_id }}</div>
                 <div style="color: #556B2F;">Family Time {{ recipe.FamilyTime }}</div>
                 <div style="color: #556B2F;">Ready in {{ recipe.readyInMinutes }} minutes</div>
-
-  
-  
-                
-  
               </div>
               Ingredients:
               <ul>
@@ -39,11 +34,6 @@
             </div>
           </div>
         </div>
-        <!-- <pre>
-        {{ $route.params }}
-        {{ recipe }}
-      </pre
-        > -->
       </div>
     </div>
   </template>
@@ -90,7 +80,4 @@
     margin-right: auto;
     width: 50%;
   }
-  /* .recipe-header{
-  
-  } */
   </style>

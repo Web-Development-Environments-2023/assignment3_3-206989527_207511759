@@ -41,11 +41,6 @@
             </div>
           </div>
         </div>
-        <!-- <pre>
-        {{ $route.params }}
-        {{ recipe }}
-      </pre
-        > -->
       </div>
     </div>
   </template>
@@ -92,7 +87,5 @@
     margin-right: auto;
     width: 50%;
   }
-  /* .recipe-header{
-  
-  } */
+
   </style>

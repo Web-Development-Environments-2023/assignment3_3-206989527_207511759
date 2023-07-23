@@ -12,17 +12,7 @@
              <b-icon  class="addFav" icon="heart-fill"  @click="postFavoriteRecipes(r.id);"></b-icon>
           </a>
         </div >
-        <!-- <div v-else @click='setDelete(r.id)'  style="text-align:left;"> 
-            <img v-b-modal.modal-1 src="../assets/garbage.png" style="width:20px;" />
-        </div> -->
       </b-col>
-      <!-- <b-col>
-        <div>
-          <b-modal id="modal-1" title="BootstrapVue" @ok = "handleOk">
-            <p class="my-4">Are you sure you want to remove this Recipe from favorite?</p>
-          </b-modal>
-        </div>
-      </b-col> -->
     </b-row>
     <b-row v-if="title=='Random Recipes'"  @click="getRandomRecipes" >
     <button class="randomizebutton" style="background-color:#556B2F; border:#556B2F; color:white;border-radius:50px;   background-color: #556B2F; padding: 10px 20px; opacity: 1; margin-top: 2rem; position: center;">Random</button>
@@ -83,26 +73,26 @@ export default {
     showAlert() {
         this.dismissCountDown = this.dismissSecs
       },
-    async handleOk(){
-        if (this.title == 'Random Recipes'){
-          this.deleteFavoriteRecipes(this.toDelete)
-          this.getFavoriteRecipes()
-        }
-        if (this.title == 'Private Recipes'){
-          await this.deletePrivateRecipes(this.toDelete)
-          await this.getPrivateRecipes()
-        }
-        if (this.title == 'Favorite Recipes'){
-          await this.deleteFavoriteRecipes(this.toDelete)
-          await this.getFavoriteRecipes()
-        }
-        if (this.title == 'Family Recipes'){
-          await this.deleteFamilyRecipes(this.toDelete)
-          await this.getFamilyRecipes()
-        }
-        await this.forceRerender()
+    // async handleOk(){
+    //     if (this.title == 'Random Recipes'){
+    //       this.deleteFavoriteRecipes(this.toDelete)
+    //       this.getFavoriteRecipes()
+    //     }
+    //     if (this.title == 'Private Recipes'){
+    //       await this.deletePrivateRecipes(this.toDelete)
+    //       await this.getPrivateRecipes()
+    //     }
+    //     if (this.title == 'Favorite Recipes'){
+    //       await this.deleteFavoriteRecipes(this.toDelete)
+    //       await this.getFavoriteRecipes()
+    //     }
+    //     if (this.title == 'Family Recipes'){
+    //       await this.deleteFamilyRecipes(this.toDelete)
+    //       await this.getFamilyRecipes()
+    //     }
+    //     await this.forceRerender()
         
-    },
+    // },
     setDelete( recipe_id){
         this.toDelete = recipe_id
     },
@@ -130,45 +120,12 @@ export default {
       }
     },
     async getRandomRecipes() {
-     this.recipes = [];
       try {
-        // const response = await this.axios.get(
-        //   this.$root.store.server_domain + "/recipes/threeRandom"
-        // );
-        const recipes =[
-                      {
-                          "id": 644167,
-                          "title": "Garam Masala Pork Chops with Mint Yogurt and Spiced Couscous",
-                          "readyInMinutes": 45,
-                          "image": "https://spoonacular.com/recipeImages/644167-556x370.jpg",
-                          "popularity": 2,
-                          "vegan": false,
-                          "vegetarian": false,
-                          "glutenFree": false
-                      },
-                      {
-                          "id": 634965,
-                          "title": "Bibimbab (Korean Rice w Vegetables & Beef)",
-                          "readyInMinutes": 45,
-                          "image": "https://spoonacular.com/recipeImages/634965-556x370.jpg",
-                          "popularity": 2,
-                          "vegan": false,
-                          "vegetarian": false,
-                          "glutenFree": true
-                      },
-                      {
-                          "id": 637055,
-                          "title": "Caramelized cranberries coconut pancakes",
-                          "readyInMinutes": 45,
-                          "image": "https://spoonacular.com/recipeImages/637055-556x370.jpg",
-                          "popularity": 2,
-                          "vegan": false,
-                          "vegetarian": true,
-                          "glutenFree": false
-                      }
-                    ];
+        const response = await this.axios.get(
+          this.$root.store.server_domain + "/recipes/threeRandom"
+        );
+        const recipes = response.data;
         this.recipes = [];
-        console.log(this.recipes)
         this.recipes.push(...recipes);
         
       } catch (error) {
@@ -177,7 +134,6 @@ export default {
     },
     async getFavoriteRecipes() {
       try {
-        console.log("asaas")
         const response = await this.axios.get(
           this.$root.store.server_domain + "/users/favorites",
           {withCredentials: true}
@@ -187,20 +143,17 @@ export default {
         this.recipes = [];
         this.recipes.push(...recipes);
       } catch (error) {
-        console.log("1")
         console.log(error);
       }
     },
     async getPrivateRecipes() {
       try {
-        console.log(this.$root.store.server_domain + "/users/privates")
         const response = await this.axios.get(
           // "http://localhost:3000/users/privates",
           this.$root.store.server_domain + "/users/privates",
           {withCredentials: true}
 
         );
-        console.log("eeee")
         const recipes = response.data;
         this.recipes = [];
         this.recipes.push(...recipes);
@@ -215,9 +168,7 @@ export default {
           {withCredentials: true}
 
         );
-        console.log("imherere")
         const recipes = response.data;
-        console.log(recipes)
         this.recipes = [];
         this.recipes.push(...recipes);
         
@@ -227,49 +178,17 @@ export default {
     },
     async getLastWatchedRecipes() {
       try {
-        console.log("arrived 1")
         const response = await this.axios.get(
           this.$root.store.server_domain + "/users/watchedrecipes",
           {withCredentials: true}
 
         );
-        //const recipes = response.data.recipes;
         const recipes = response.data;
         this.recipes = [];
         this.recipes.push(...recipes);
         
       } catch (error) {
         console.log(error)
-      }
-    },
-    async deleteFavoriteRecipes(Id){
-      try {
-        const response = await this.axios.delete(
-          "/users/favorite"+"/"+Id
-          /*this.$root.store.server_domain + "/users/favorites",*/
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async deletePrivateRecipes(Id){
-      try {
-        const response = await this.axios.delete(
-          "/users/private"+"/"+Id
-          /*this.$root.store.server_domain + "/users/favorites",*/
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async deleteFamilyRecipes(Id){
-      try {
-        const response = await this.axios.delete(
-          "/users/family"+"/"+Id
-          /*this.$root.store.server_domain + "/users/favorites",*/
-        );
-      } catch (error) {
-        console.log(error);
       }
     },
     async searchQuery(query,cusine,diet,intol,num,sortFilter)
@@ -321,7 +240,7 @@ export default {
       }
       else // Stars
       {
-      res.sort((a, b) => parseFloat(a.popularity) - parseFloat(b.popularity));
+      res.sort((a, b) => parseFloat(b.popularity) - parseFloat(a.popularity));
       }
 
       
@@ -397,7 +316,6 @@ and (min-device-width : 720px)
    
   }
   
-/* Styles */
 }
 
 

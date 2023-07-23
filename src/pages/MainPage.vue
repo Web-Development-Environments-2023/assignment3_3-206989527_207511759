@@ -52,15 +52,6 @@ methods:{
 </script>
 <style lang="scss" scoped>
 
-.mybox{
-        width: 100%;
-        height: 100%;
-        position: relative;
-        top: 0;
-        left: 0;
-        opacity: 1;
-}
-
 .container
 {
   min-width: 100%;
