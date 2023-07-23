@@ -15,7 +15,15 @@
         <b-row>
           <b-col >Image </b-col>
           <b-col>
-            <input name ="recipe-image" type="file" @change="onFileSelected" style="margin-left: 30%;"  required/>
+            <b-form-input
+            ref ="image"
+            v-model="image"
+            :state="selectedfile"
+            minlength=3
+            placeholder=" Enter Recipe image Link"
+            required
+          >
+          </b-form-input>
           </b-col>
         </b-row>
         <!--Recipe's Name-->
@@ -225,6 +233,8 @@ export default {
         const valid = this.$refs.form.checkValidity()
         this.titleState = this.$refs['title'].checkValidity()
         this.minuteState = this.$refs['minutes'].checkValidity()
+        this.selectedfile = this.$refs['image'].checkValidity()
+
         return valid
       },
       resetModal() {
@@ -247,7 +257,7 @@ export default {
         
         // Trigger submit handler
         await this.handleSubmit()
-        console.log(this.$refs)
+        console.log(this.selectedfile)
         this.$refs.modal.hide();
 
 
@@ -261,7 +271,6 @@ export default {
         }
         //submittion
         await this.submit()
-        console.log(this.$bvModal)        
                 
       },
       addField(fieldType) {
@@ -270,15 +279,13 @@ export default {
       removeField(index, fieldType) {
       fieldType.splice(index, 1);
       },
-      onFileSelected(event){
-        this.selectedfile = event.target.files[0].name
-      },
+      
       async submit(){
         try {
         const response = await this.axios.post(
           this.$root.store.server_domain + "/users/privates",
           {
-            image : this.selectedfile,
+            image : this.image,
             title : this.title,
             preparationTime : this.minutes,
             vegetarian : this.vegetarian,

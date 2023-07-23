@@ -2,7 +2,7 @@
     <router-link  :to="recipeLink" class="recipe-preview">
     
       <div class="recipe-body">
-        <img v-if="this.title == 'Private Recipes' || this.title == 'Family Recipes'" :src= "this.image_src" class="recipe-image" alt="Red dot"  />
+        <img v-if="this.title == 'Private Recipes' || this.title == 'Family Recipes'" :src= "recipe.image" class="recipe-image" alt="Image"  />
         <img v-else-if="image_load" :src="recipe.image" class="recipe-image" />
         
       </div>
@@ -54,8 +54,9 @@
     },
     mounted() {
       if(this.title == "Private Recipes" || this.title == "Family Recipes"){
-        this.image_src = 'data:image/png;base64,'+this.recipe.image;
-        console.log(this.recipe)
+        this.axios.get(this.recipe.image).then((i) => {
+        this.image_load = true;
+        });
 
       }
       else{
